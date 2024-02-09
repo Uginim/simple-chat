@@ -1,6 +1,6 @@
 spring:
 #  profiles:
 #    include: oauth
-#  mvc:
-#    servlet:
-#      path: /api/
+  mvc:
+    servlet:
+      path: /api/

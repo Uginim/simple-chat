@@ -8,6 +8,5 @@ import org.springframework.stereotype.Service
 class ChatMessageService(private val template: SimpMessagingTemplate) {
     fun send(chatRoomCode: String, chatMessageDto: ChatMessageDTO) {
         template.convertAndSend("/chat/messages/$chatRoomCode", chatMessageDto)
-//        template.convertAndSend("/chat/messages", chatMessageDto)
     }
 }
