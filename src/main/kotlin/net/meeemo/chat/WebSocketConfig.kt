@@ -17,6 +17,8 @@ class WebSocketConfig : WebSocketMessageBrokerConfigurer {
     }
 
     override fun registerStompEndpoints(registry: StompEndpointRegistry) {
-        registry.addEndpoint("/ws")
+        registry.addEndpoint("/ws") // websocket 연결에 대한 handshaking을 처리
+//            .setAllowedOrigins("*") // 모든 도메인에 대해 접근 허용
+//            .withSockJS() // SockJS 지원
     }
 }

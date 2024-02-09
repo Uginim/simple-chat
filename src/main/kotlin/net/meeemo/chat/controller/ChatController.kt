@@ -1,16 +1,27 @@
 package net.meeemo.chat.controller
 
-import net.meeemo.chat.entity.ChatMessage
+import net.meeemo.chat.entity.chat.ChatMessageDTO
+import net.meeemo.chat.service.ChatMessageService
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import org.springframework.messaging.handler.annotation.DestinationVariable
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.messaging.handler.annotation.SendTo
 import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.PathVariable
 
 @Controller
-class ChatController {
+class ChatMessageController(
+    private val chatMessageService: ChatMessageService,
+) {
+    private val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
-    @MessageMapping("/send")
-    @SendTo("/chat/messages")
-    fun send(chatMessage: ChatMessage): ChatMessage {
-        return chatMessage
+    @MessageMapping("/send/message/{chatRoomCode}")
+    fun send(
+        @DestinationVariable chatRoomCode: String,
+        chatMessage: ChatMessageDTO,
+    ) {
+        logger.info("chatRoomCode: $chatRoomCode")
+        chatMessageService.send(chatRoomCode, chatMessage)
     }
 }

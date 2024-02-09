@@ -9,20 +9,47 @@
 <body>
 <script>
     const stompClient = new StompJs.Client({
-        brokerURL: 'ws://localhost:8080/ws',
+        // brokerURL: 'ws://localhost:8080/ws',
+        brokerURL: `ws://${window.location.host}/ws`,
     });
+
+    // 방번호 얻기
+    async function getRoomCode() {
+        const xmlHttpRequest = new XMLHttpRequest();
+        xmlHttpRequest.open('GET', `http://${window.location.host}/chat/room/create`, false);
+        function sendAndWait(xmlHttpRequest) {
+            return new Promise((resolve, reject) => {
+                xmlHttpRequest.onreadystatechange = () => {
+                    if (xmlHttpRequest.readyState === 4 && xmlHttpRequest.status === 200) {
+                        resolve(xmlHttpRequest.responseText);
+                    } else {
+                        reject(new Error('error'));
+                    }
+                };
+                xmlHttpRequest.send();
+            });
+        }
+        console.log('getRoomCode');
+        const requestResponseText = await sendAndWait(xmlHttpRequest);
+
+        console.log(requestResponseText);
+        // document.getElementById('roomCode').innerText = requestResponseText;
+        document.getElementById('roomCode').value = requestResponseText;
+        return requestResponseText;
+    }
 
     function connect() {
         console.log('Connecting to WS...');
         stompClient.activate();
     }
 
-    stompClient.onConnect = function (frame) {
-        // setConnected(true);
-        stompClient.subscribe('/chat/messages', function (message) {
+    stompClient.onConnect = function (options) {
+        const roomCode = document.getElementById('roomCode').value;
+        const result = stompClient.subscribe(`/chat/messages/${roomCode}`, function (message) {
             console.log(message);
             showMessage(JSON.parse(message.body).content);
         });
+        console.log("subscribe result:", result);
     };
 
     stompClient.onWebSocketError = (error) => {
@@ -41,17 +68,21 @@
     };
 
     function sendMessage() {
+        const chatRoomCode = document.getElementById('roomCode').value;
         const content = document.getElementById('message').value;
         console.log(content);
         stompClient.publish({
-            destination: '/app/send', body: JSON.stringify({
+            // destination: `/app/send/${chatRoomCode}`, body: JSON.stringify({
+            destination: `/app/send/message/${chatRoomCode}`, body: JSON.stringify({
                 content: content,
-                sender: 'guest',
+                senderName: 'guest',
                 messageType: 'CHAT'
             })
         });
     }
 </script>
+<input id="roomCode" type="text"/>
+<button id="getRoomCode" onclick="getRoomCode()">Get Room Code</button>
 <button id="connect" onclick="connect()">Connect</button>
 <input id="message" type="text">
 <button id="send" onclick="sendMessage()">Send</button>
