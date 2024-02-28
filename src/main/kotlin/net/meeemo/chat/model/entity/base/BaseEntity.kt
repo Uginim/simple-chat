@@ -5,6 +5,7 @@ import jakarta.persistence.Column
 import jakarta.persistence.MappedSuperclass
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
+import java.time.LocalDateTime
 
 @MappedSuperclass
 open class BaseEntity {
@@ -15,9 +16,9 @@ open class BaseEntity {
     @Column(nullable = false)
     @CreationTimestamp
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    var createdAt: Long? = null
+    val createdAt: LocalDateTime = LocalDateTime.now()
     @Column
     @UpdateTimestamp
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    var updatedAt: Long? = null
+    var updatedAt: LocalDateTime = LocalDateTime.now()
 }
