@@ -1,7 +1,7 @@
 package net.meeemo.chat.service
 
 import com.fasterxml.jackson.databind.JsonNode
-import net.meeemo.chat.entity.user.ChatUser
+import net.meeemo.chat.model.entity.user.ChatUser
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.PropertySource
 import org.springframework.core.env.Environment

@@ -1,6 +1,6 @@
 package net.meeemo.chat.service
 
-import net.meeemo.chat.entity.chat.ChatMessageDTO
+import net.meeemo.chat.model.dto.chat.ChatMessageDTO
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Service
 

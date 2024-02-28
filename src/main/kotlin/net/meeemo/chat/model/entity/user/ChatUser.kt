@@ -1,4 +1,4 @@
-package net.meeemo.chat.entity.user
+package net.meeemo.chat.model.entity.user
 
 class ChatUser(
     var id: String,

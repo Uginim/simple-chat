@@ -1,4 +1,4 @@
-package net.meeemo.chat.entity.chat
+package net.meeemo.chat.model.entity.chat
 
 class ChatRoom (
     var id: String,

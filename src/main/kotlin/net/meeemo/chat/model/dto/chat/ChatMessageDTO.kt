@@ -1,6 +1,6 @@
-package net.meeemo.chat.entity.chat
+package net.meeemo.chat.model.dto.chat
 
-import net.meeemo.chat.entity.user.ChatUser
+import net.meeemo.chat.model.entity.user.ChatUser
 import net.meeemo.chat.enums.MessageType
 
 data class ChatMessageDTO (
