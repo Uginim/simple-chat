@@ -5,6 +5,7 @@
     <!-- stomp -->
     <title>RandomChat</title>
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+    <script src="./js/chat-room.js"></script>
 </head>
 <body>
     <input id="roomCode" type="text"/>
@@ -13,6 +14,5 @@
     <input id="message" type="text">
     <button id="send" onclick="sendMessage()">Send</button>
     <div id="messages"></div>
-    <script src="chat-room.js"/>
 </body>
 </html>
